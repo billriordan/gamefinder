@@ -26,7 +26,7 @@ spec:
         volumeMounts:
         - name: secret-volume
           readOnly: true
-          mountPath: "/app"
+          mountPath: "/var/www/html"
         ports:
         - containerPort: 80
           protocol: TCP
