@@ -27,12 +27,12 @@ spec:
           secretName: gamefinder-env
       containers:
       - name: nginx
-        image: nginx:1.18-alpine
+        image: nginx
         imagePullPolicy: Always
         volumeMounts:
-        - mountPath: /etc/nginx
+        - name: nginx-conf
           readOnly: true
-          name: nginx-conf
+          mountPath: /etc/nginx
         ports:
         - containerPort: 80
           protocol: TCP
@@ -42,7 +42,7 @@ spec:
         volumeMounts:
         - name: secret-volume
           readOnly: true
-          mountPath: "/var/www/html/.env"
+          mountPath: /var/www
         ports:
         - containerPort: 9000
           protocol: TCP
