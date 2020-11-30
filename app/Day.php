@@ -20,6 +20,9 @@ class Day extends Model
     	return $this->belongsTo('App\User');
     }
 
+    /*
+    *   this is a comment
+    */
     public static function getFutureUserDatesAsArray($current_user_id) {
         return Day::where('date', '>=', Carbon::today()->toDateString())
         ->where('user_id', '=', $current_user_id)
