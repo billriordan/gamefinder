@@ -16,10 +16,26 @@ spec:
       imagePullSecrets:
       - name: pipeline-docker-registry
       volumes:
+      - name: nginx-conf
+        configMap:
+          name: nginx-conf
+          items:
+            - key: nginx.conf
+              path: nginx.conf
       - name: secret-volume
         secret:
           secretName: gamefinder-env
       containers:
+      - name: nginx
+        image: nginx:1.18-alpine
+        imagePullPolicy: Always
+        volumeMounts:
+        - mountPath: /etc/nginx
+          readOnly: true
+          name: nginx-conf
+        ports:
+        - containerPort: 80
+          protocol: TCP
       - name: gamefinder
         image: ${CICD_IMAGE}:latest
         imagePullPolicy: Always
@@ -28,8 +44,36 @@ spec:
           readOnly: true
           mountPath: "/var/www/html/.env"
         ports:
-        - containerPort: 80
+        - containerPort: 9000
           protocol: TCP
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-conf
+  namespace: gamefinder
+data:
+  nginx.conf: |
+    server {
+        listen 80;
+        index index.php index.html;
+        root /var/www/public;
+
+        location / {
+            try_files $uri /index.php?$args;
+        }
+
+        location ~ \.php$ {
+            fastcgi_split_path_info ^(.+\.php)(/.+)$;
+            fastcgi_pass 127.0.0.1:9000;
+            fastcgi_index index.php;
+            fastcgi_buffers 16 16k; 
+            fastcgi_buffer_size 32k;
+            include fastcgi_params;
+            fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+            fastcgi_param PATH_INFO $fastcgi_path_info;
+        }
+    }
 
 ---
 
