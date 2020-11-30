@@ -43,10 +43,10 @@ spec:
       - name: gamefinder
         image: ${CICD_IMAGE}:latest
         imagePullPolicy: Always
-        # command: ["/bin/bash", "-c", "cp /etc/secret-volume/.env /var/www/.env"] 
+        command: ["/bin/bash", "-c", "cp -r /var/www /tmp/www/public && cp /etc/secret-volume/.env /var/www/.env"] 
         volumeMounts:
         - name: shared-data
-          mountPath: /var/www/public
+          mountPath: /tmp/www/public
         - name: secret-volume
           readOnly: true
           mountPath: "/etc/secret-volume"
