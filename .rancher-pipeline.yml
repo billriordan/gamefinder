@@ -1,0 +1,11 @@
+stages:
+- name: Publish
+  steps:
+  - publishImageConfig:
+      dockerfilePath: ./Dockerfile
+      buildContext: .
+      tag: gamefinder:latest
+- name: Deploy
+  steps:
+  - applyYamlConfig:
+      path: ./dc-svc-ingress.yaml
