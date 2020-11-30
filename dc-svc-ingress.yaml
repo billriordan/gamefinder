@@ -16,6 +16,8 @@ spec:
       imagePullSecrets:
       - name: pipeline-docker-registry
       volumes:
+      - name: shared-data
+        emptyDir: {}
       - name: nginx-conf
         configMap:
           name: nginx-conf
@@ -30,6 +32,8 @@ spec:
         image: nginx:1.18-alpine
         imagePullPolicy: Always
         volumeMounts:
+        - name: shared-data
+          mountPath: /var/www/public
         - name: nginx-conf
           readOnly: true
           mountPath: /etc/nginx/conf.d
@@ -41,6 +45,8 @@ spec:
         imagePullPolicy: Always
         # command: ["/bin/bash", "-c", "cp /etc/secret-volume/.env /var/www/.env"] 
         volumeMounts:
+        - name: shared-data
+          mountPath: /var/www/public
         - name: secret-volume
           readOnly: true
           mountPath: "/etc/secret-volume"
