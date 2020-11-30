@@ -1,7 +1,7 @@
 FROM composer:1 as build
 WORKDIR /app
 COPY . /app
-RUN composer install
+RUN composer install --no-dev
 
 FROM php:7.1.8-apache
 EXPOSE 80
