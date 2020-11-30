@@ -42,7 +42,7 @@ spec:
         volumeMounts:
         - name: secret-volume
           readOnly: true
-          mountPath: /var/www
+          mountPath: "/var/www/.env"
         ports:
         - containerPort: 9000
           protocol: TCP
