@@ -39,10 +39,11 @@ spec:
       - name: gamefinder
         image: ${CICD_IMAGE}:latest
         imagePullPolicy: Always
+        command: ["/bin/bash", "-c", "cp /etc/secret-volume/.env /var/www/.env"] 
         volumeMounts:
         - name: secret-volume
           readOnly: true
-          mountPath: "/var/www/.env"
+          mountPath: "/etc/secret-volume"
         ports:
         - containerPort: 9000
           protocol: TCP
