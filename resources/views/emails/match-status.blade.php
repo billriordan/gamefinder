@@ -1,0 +1,1 @@
+Your match <a href="travelgamefinder.com">{{ $match->awayUser['name'] }} at {{ $match->homeUser['name'] }}</a> is now {{ $match->status }}.
