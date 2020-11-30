@@ -57,7 +57,7 @@ metadata:
   namespace: gamefinder
 spec:
   rules:
-    - host: gamefinder.guldenconsulting.com
+    - host: gamefinder.guldentech.com
       http:
         paths:
           - path: /
