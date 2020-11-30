@@ -20,19 +20,19 @@ spec:
         configMap:
           name: nginx-conf
           items:
-            - key: nginx.conf
-              path: nginx.conf
+            - key: default.conf
+              path: default.conf
       - name: secret-volume
         secret:
           secretName: gamefinder-env
       containers:
-      - name: nginx
+      - name: nginx:1.18-alpine
         image: nginx
         imagePullPolicy: Always
         volumeMounts:
         - name: nginx-conf
           readOnly: true
-          mountPath: /etc/nginx
+          mountPath: /etc/nginx/conf.d
         ports:
         - containerPort: 80
           protocol: TCP
@@ -55,7 +55,7 @@ metadata:
   name: nginx-conf
   namespace: gamefinder
 data:
-  nginx.conf: |
+  default.conf: |
     server {
         listen 80;
         index index.php index.html;
