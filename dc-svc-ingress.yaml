@@ -15,10 +15,18 @@ spec:
     spec:
       imagePullSecrets:
       - name: pipeline-docker-registry
+      volumes:
+      - name: secret-volume
+        secret:
+          secretName: gamefinder-env
       containers:
       - name: gamefinder
         image: ${CICD_IMAGE}:latest
         imagePullPolicy: Always
+        volumeMounts:
+        - name: secret-volume
+          readOnly: true
+          mountPath: "/app"
         ports:
         - containerPort: 80
           protocol: TCP
