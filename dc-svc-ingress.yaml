@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gamefinder
+  namespace: gamefinder
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gamefinder
+  template:
+    metadata:
+      labels:
+        app: gamefinder
+    spec:
+      imagePullSecrets:
+      - name: pipeline-docker-registry
+      containers:
+      - name: gamefinder
+        image: ${CICD_IMAGE}:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+          protocol: TCP
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: gamefinder-service
+  namespace: gamefinder
+spec:
+  type: ClusterIP
+  ports:
+    - name: gamefinder-port
+      port: 80
+      protocol: TCP
+      targetPort: 80
+  selector:
+    app: gamefinder
+
+---
+
+kind: Ingress
+apiVersion: extensions/v1beta1
+metadata:
+  name: gamefinder-ingress
+  namespace: gamefinder
+spec:
+  rules:
+    - host: gamefinder.guldenconsulting.com
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: gamefinder-service
+              servicePort: gamefinder-port
