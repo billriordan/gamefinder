@@ -8,8 +8,8 @@ stages:
         apt-get install -y --no-install-recommends git zip libsqlite3-dev zlib1g-dev
         docker-php-ext-install zip
         curl --silent --show-error https://getcomposer.org/installer | php
-        ./composer.phar install --no-scripts --no-suggest --no-interaction --prefer-dist --optimize-autoloader
-        ./composer.phar dump-autoload --optimize --classmap-authoritative
+        ./composer.phar install --no-dev --no-scripts --no-suggest --no-interaction --prefer-dist --optimize-autoloader
+        ./composer.phar dump-autoload --no-dev --optimize --classmap-authoritative
 - name: Publish
   steps:
   - publishImageConfig:
