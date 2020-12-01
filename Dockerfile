@@ -11,3 +11,5 @@ RUN chown -R www-data:www-data \
 
 RUN mkdir -p /tmp/storage/bootstrap/cache \
     && chmod 777 -R /tmp/storage/bootstrap/cache
+
+RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
