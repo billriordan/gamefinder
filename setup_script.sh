@@ -6,7 +6,7 @@ cp -r /var/www/public /tmp/www
 chmod 777 -R /var/www/storage
 
 # install sql drivers
-docker-php-ext-install mysqli pdo pdo_mysql
+# docker-php-ext-install mysqli pdo pdo_mysql
 
 # setup database
 php artisan migrate -n
