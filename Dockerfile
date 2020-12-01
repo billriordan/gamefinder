@@ -1,4 +1,4 @@
-FROM php:7.3-fpm
+FROM chialab/php:7.2-fpm
 
 WORKDIR /var/www
 
@@ -11,5 +11,3 @@ RUN chown -R www-data:www-data \
 
 RUN mkdir -p /tmp/storage/bootstrap/cache \
     && chmod 777 -R /tmp/storage/bootstrap/cache
-
-RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
