@@ -43,6 +43,7 @@ spec:
       - name: gamefinder
         image: ${CICD_IMAGE}:latest
         imagePullPolicy: Always
+        command: ["/bin/bash", "-c", "./setup_script.sh && php-fpm"]
         volumeMounts:
         - name: shared-data
           mountPath: /tmp/www/public
